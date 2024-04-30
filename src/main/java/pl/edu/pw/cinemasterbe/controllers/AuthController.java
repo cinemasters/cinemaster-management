@@ -24,7 +24,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final UserMapper userMapper;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity<UserDto> login(@RequestBody UserLogin credentials, HttpServletResponse response) {
         var authToken = authManager.authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authToken);
@@ -36,5 +36,14 @@ public class AuthController {
         response.addCookie(jwtCookie);
 
         return ResponseEntity.ok(userMapper.map(user));
+    }
+
+    @RequestMapping(path = "/logout", method = RequestMethod.POST)
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        var jwtCookie = new Cookie(SecurityConfiguration.JWT_COOKIE_NAME, "");
+        jwtCookie.setHttpOnly(true);
+        response.addCookie(jwtCookie);
+
+        return ResponseEntity.ok().build();
     }
 }
