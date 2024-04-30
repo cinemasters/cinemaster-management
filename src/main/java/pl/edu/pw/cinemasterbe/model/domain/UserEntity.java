@@ -13,14 +13,14 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name="UserEntity")
+@Table(name = "UserEntity")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String surname;
