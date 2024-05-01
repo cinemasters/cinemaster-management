@@ -8,6 +8,7 @@ import pl.edu.pw.cinemasterbe.model.dto.PageDto;
 import pl.edu.pw.cinemasterbe.model.dto.SeatTypeDto;
 import pl.edu.pw.cinemasterbe.model.mappers.PageMapper;
 import pl.edu.pw.cinemasterbe.model.mappers.SeatTypeMapper;
+import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.services.SeatTypeService;
 
 @RestController
@@ -22,29 +23,29 @@ public class SeatTypeController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<PageDto<SeatTypeDto>> getSeatTypes(@RequestParam(defaultValue = "0", required = false) int page, @RequestParam(defaultValue = "50", required = false) int size) {
         var pageRequest = PageRequest.of(page, size);
-        var data = seatTypeService.getSeatTypes(pageRequest);
+        var response = seatTypeService.getSeatTypes(pageRequest);
 
-        return ResponseEntity.ok(pageMapper.map(data, seatTypeMapper::map));
+        return ResponseEntity.ok(pageMapper.map(response.getData(), seatTypeMapper::map));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<SeatTypeDto> getSeatType(@PathVariable int id) {
-        var seatType = seatTypeService.getSeatTypeById(id);
+        var response = seatTypeService.getSeatTypeById(id);
 
-        return ResponseEntity.ok(seatType != null ? seatTypeMapper.map(seatType) : null);
+        return response.isSuccess() ? ResponseEntity.ok(seatTypeMapper.map(response.getData())) : ResponseEntity.noContent().build();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> createSeatType(@RequestBody SeatTypeDto seatType) {
-        seatTypeService.createSeatType(seatTypeMapper.mapToEntity(seatType));
+    public ResponseEntity<ServiceResponse<Void>> createSeatType(@RequestBody SeatTypeDto seatType) {
+        var response = seatTypeService.createSeatType(seatTypeMapper.mapToEntity(seatType));
 
-        return ResponseEntity.ok().build();
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateSeatType(@RequestBody SeatTypeDto seatType, @PathVariable int id) {
-        seatTypeService.updateSeatType(seatTypeMapper.mapToEntity(seatType), id);
+    public ResponseEntity<ServiceResponse<Void>> updateSeatType(@RequestBody SeatTypeDto seatType, @PathVariable int id) {
+        var response = seatTypeService.updateSeatType(seatTypeMapper.mapToEntity(seatType), id);
 
-        return ResponseEntity.ok().build();
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 }
