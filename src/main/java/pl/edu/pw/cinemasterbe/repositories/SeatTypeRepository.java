@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pl.edu.pw.cinemasterbe.model.domain.SeatType;
 
 public interface SeatTypeRepository extends JpaRepository<SeatType, Integer> {
-    boolean existsByCode(char code);
+    boolean existsByCode(String code);
 }

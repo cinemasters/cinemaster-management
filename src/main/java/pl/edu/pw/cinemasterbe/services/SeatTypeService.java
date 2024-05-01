@@ -38,7 +38,7 @@ public class SeatTypeService {
             throw new IllegalArgumentException("Invalid seat type data.");
         }
 
-        if (newSeatType.getCode() != oldSeatType.getCode() && seatTypeRepository.existsByCode(newSeatType.getCode())) {
+        if (newSeatType.getCode().equals(oldSeatType.getCode()) && seatTypeRepository.existsByCode(newSeatType.getCode())) {
             throw new IllegalArgumentException("Seat type with this code already exists.");
         }
 

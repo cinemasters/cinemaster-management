@@ -17,7 +17,7 @@ public class SeatTypeSeeder {
 
         for (int i = 1; i < 8; i++) {
             seatTypes.add(SeatType.builder()
-                    .code(String.valueOf(i).charAt(0))
+                    .code(String.valueOf(i))
                     .name("Strefa %d".formatted(i))
                     .description("Strefa biletowa numer %d".formatted(i))
                     .build());
