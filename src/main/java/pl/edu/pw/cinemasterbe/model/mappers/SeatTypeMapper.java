@@ -7,4 +7,6 @@ import pl.edu.pw.cinemasterbe.model.dto.SeatTypeDto;
 @Mapper(componentModel = "spring")
 public interface SeatTypeMapper {
     SeatTypeDto map(SeatType seatType);
+
+    SeatType mapToEntity(SeatTypeDto dto);
 }

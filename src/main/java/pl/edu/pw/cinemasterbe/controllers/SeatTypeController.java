@@ -31,4 +31,25 @@ public class SeatTypeController {
                 .totalPages(data.getTotalPages())
                 .build());
     }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<SeatTypeDto> getSeatType(@PathVariable int id) {
+        var seatType = seatTypeService.getSeatTypeById(id);
+
+        return ResponseEntity.ok(seatType != null ? seatTypeMapper.map(seatType) : null);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> createSeatType(@RequestBody SeatTypeDto seatType) {
+        seatTypeService.createSeatType(seatTypeMapper.mapToEntity(seatType));
+
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateSeatType(@RequestBody SeatTypeDto seatType, @PathVariable int id) {
+        seatTypeService.updateSeatType(seatTypeMapper.mapToEntity(seatType), id);
+
+        return ResponseEntity.ok().build();
+    }
 }
