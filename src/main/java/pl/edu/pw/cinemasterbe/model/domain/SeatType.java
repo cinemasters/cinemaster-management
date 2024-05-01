@@ -18,4 +18,5 @@ public class SeatType {
     private int id;
     private char code;
     private String name;
+    private String description;
 }
