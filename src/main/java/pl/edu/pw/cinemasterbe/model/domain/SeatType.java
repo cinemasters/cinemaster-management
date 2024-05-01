@@ -20,7 +20,9 @@ public class SeatType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Pattern(regexp = "[A-Za-z0-9]")
-    private char code;
+    @Size(min = 1, max = 1)
+    @NotNull
+    private String code;
     @Size(min = 1, max = 64)
     @NotNull
     private String name;

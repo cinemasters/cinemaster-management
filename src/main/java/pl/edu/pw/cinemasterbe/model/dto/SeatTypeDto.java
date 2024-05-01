@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SeatTypeDto {
     private int id;
-    private char code;
+    private String code;
     private String name;
     private String description;
 }
