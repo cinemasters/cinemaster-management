@@ -46,7 +46,7 @@ public class SeatTypeService {
             return ServiceResponse.<Void>builder().success(false).message("The seat type data is invalid.").build();
         }
 
-        if (newSeatType.getCode().equals(oldSeatType.getCode()) && seatTypeRepository.existsByCode(newSeatType.getCode())) {
+        if (!newSeatType.getCode().equals(oldSeatType.getCode()) && seatTypeRepository.existsByCode(newSeatType.getCode())) {
             return ServiceResponse.<Void>builder().success(false).message("Seat type with code %s already exists.".formatted(newSeatType.getCode())).build();
         }
 
