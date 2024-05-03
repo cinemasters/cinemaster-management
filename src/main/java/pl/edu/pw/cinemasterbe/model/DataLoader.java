@@ -3,10 +3,7 @@ package pl.edu.pw.cinemasterbe.model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import pl.edu.pw.cinemasterbe.model.seeders.ScreeningTypeSeeder;
-import pl.edu.pw.cinemasterbe.model.seeders.SeatTypeSeeder;
-import pl.edu.pw.cinemasterbe.model.seeders.TicketTypeSeeder;
-import pl.edu.pw.cinemasterbe.model.seeders.UserSeeder;
+import pl.edu.pw.cinemasterbe.model.seeders.*;
 
 @Component
 @RequiredArgsConstructor
@@ -15,6 +12,7 @@ public class DataLoader implements CommandLineRunner {
     private final SeatTypeSeeder seatTypeSeeder;
     private final ScreeningTypeSeeder screeningTypeSeeder;
     private final TicketTypeSeeder ticketTypeSeeder;
+    private final TicketPerkSeeder ticketPerkSeeder;
 
     @Override
     public void run(String... args) {
@@ -22,5 +20,6 @@ public class DataLoader implements CommandLineRunner {
         seatTypeSeeder.seed();
         screeningTypeSeeder.seed();
         ticketTypeSeeder.seed();
+        ticketPerkSeeder.seed();
     }
 }
