@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.edu.pw.cinemasterbe.model.enums.ScreeningTypeEnum;
+import pl.edu.pw.cinemasterbe.model.enums.TicketPerkEnum;
 
 import java.math.BigDecimal;
 
@@ -17,7 +17,7 @@ public class TicketPerkDetailsDto {
     private String name;
     private String description;
     private BigDecimal charge;
-    private ScreeningTypeEnum type;
+    private TicketPerkEnum type;
     private Integer seatTypeId;
     private Integer screeningTypeId;
 }

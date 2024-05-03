@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.edu.pw.cinemasterbe.model.enums.ScreeningTypeEnum;
+import pl.edu.pw.cinemasterbe.model.enums.TicketPerkEnum;
 
 import java.math.BigDecimal;
 
@@ -30,7 +30,7 @@ public class TicketPerk {
     private BigDecimal charge;
     @Enumerated(EnumType.STRING)
     @NotNull
-    private ScreeningTypeEnum type;
+    private TicketPerkEnum type;
     @OneToOne
     @JoinColumn(name = "seat_type_id", referencedColumnName = "id")
     private SeatType seatType;
