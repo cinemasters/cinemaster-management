@@ -19,6 +19,10 @@ public class SeatTypeService {
         return ServiceResponse.<Page<SeatType>>builder().success(true).data(seatTypeRepository.findAll(pageRequest)).build();
     }
 
+    public ServiceResponse<Iterable<SeatType>> getUsableSeatTypes(int perkId) {
+        return ServiceResponse.<Iterable<SeatType>>builder().success(true).data(seatTypeRepository.findAllByPerkIdOrPerkNull(perkId)).build();
+    }
+
     public ServiceResponse<SeatType> getSeatTypeById(int id) {
         var seatType = seatTypeRepository.findById(id).orElse(null);
 

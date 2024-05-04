@@ -11,6 +11,8 @@ import pl.edu.pw.cinemasterbe.model.mappers.SeatTypeMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.services.SeatTypeService;
 
+import java.util.stream.StreamSupport;
+
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
@@ -26,6 +28,13 @@ public class SeatTypeController {
         var response = seatTypeService.getSeatTypes(pageRequest);
 
         return ResponseEntity.ok(pageMapper.map(response.getData(), seatTypeMapper::map));
+    }
+
+    @RequestMapping(path = "/usable", method = RequestMethod.GET)
+    public ResponseEntity<Iterable<SeatTypeDto>> getUsableSeatTypes(@RequestParam(defaultValue = "-1", required = false) int perkId) {
+        var response = seatTypeService.getUsableSeatTypes(perkId);
+
+        return ResponseEntity.ok(StreamSupport.stream(response.getData().spliterator(), false).map(seatTypeMapper::map).toList());
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

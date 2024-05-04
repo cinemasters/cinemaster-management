@@ -28,4 +28,6 @@ public class SeatType {
     private String name;
     @Size(max = 255)
     private String description;
+    @OneToOne(mappedBy = "seatType")
+    private TicketPerk perk;
 }

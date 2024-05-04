@@ -7,4 +7,6 @@ import pl.edu.pw.cinemasterbe.model.domain.ScreeningType;
 @Repository
 public interface ScreeningTypeRepository extends JpaRepository<ScreeningType, Integer> {
     boolean existsByName(String name);
+
+    Iterable<ScreeningType> findAllByPerkIdOrPerkNull(int perkId);
 }

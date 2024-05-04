@@ -5,4 +5,6 @@ import pl.edu.pw.cinemasterbe.model.domain.SeatType;
 
 public interface SeatTypeRepository extends JpaRepository<SeatType, Integer> {
     boolean existsByCode(String code);
+
+    Iterable<SeatType> findAllByPerkIdOrPerkNull(int perkId);
 }

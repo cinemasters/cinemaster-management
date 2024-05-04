@@ -19,6 +19,10 @@ public class ScreeningTypeService {
         return ServiceResponse.<Page<ScreeningType>>builder().success(true).data(screeningTypeRepository.findAll(pageRequest)).build();
     }
 
+    public ServiceResponse<Iterable<ScreeningType>> getUsableScreeningTypes(int perkId) {
+        return ServiceResponse.<Iterable<ScreeningType>>builder().success(true).data(screeningTypeRepository.findAllByPerkIdOrPerkNull(perkId)).build();
+    }
+
     public ServiceResponse<ScreeningType> getScreeningTypeById(int id) {
         var screeningType = screeningTypeRepository.findById(id).orElse(null);
 

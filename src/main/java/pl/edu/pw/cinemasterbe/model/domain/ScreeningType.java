@@ -27,4 +27,6 @@ public class ScreeningType {
     private String name;
     @Size(max = 255)
     private String description;
+    @OneToOne(mappedBy = "screeningType")
+    private TicketPerk perk;
 }

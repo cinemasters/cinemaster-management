@@ -11,6 +11,8 @@ import pl.edu.pw.cinemasterbe.model.mappers.ScreeningTypeMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.services.ScreeningTypeService;
 
+import java.util.stream.StreamSupport;
+
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
@@ -26,6 +28,13 @@ public class ScreeningTypeController {
         var response = screeningTypeService.getScreeningTypes(pageRequest);
 
         return ResponseEntity.ok(pageMapper.map(response.getData(), screeningTypeMapper::mapToDto));
+    }
+
+    @RequestMapping(path = "/usable", method = RequestMethod.GET)
+    public ResponseEntity<Iterable<ScreeningTypeDto>> getUsableScreeningTypes(@RequestParam(defaultValue = "-1", required = false) int perkId) {
+        var response = screeningTypeService.getUsableScreeningTypes(perkId);
+
+        return ResponseEntity.ok(StreamSupport.stream(response.getData().spliterator(), false).map(screeningTypeMapper::mapToDto).toList());
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
