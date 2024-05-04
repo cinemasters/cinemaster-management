@@ -9,6 +9,7 @@ import pl.edu.pw.cinemasterbe.model.dto.TicketPerkDetailsDto;
 import pl.edu.pw.cinemasterbe.model.dto.TicketPerkGridDto;
 import pl.edu.pw.cinemasterbe.model.mappers.PageMapper;
 import pl.edu.pw.cinemasterbe.model.mappers.TicketPerkMapper;
+import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.services.TicketPerkService;
 
 @RestController
@@ -33,5 +34,19 @@ public class TicketPerkController {
         var response = ticketPerkService.getTicketPerkById(id);
 
         return response.isSuccess() ? ResponseEntity.ok(ticketPerkMapper.mapToDetailsDto(response.getData())) : ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<ServiceResponse<Integer>> createTicketPerk(@RequestBody TicketPerkDetailsDto ticketPerk) {
+        var response = ticketPerkService.createTicketPerk(ticketPerk);
+
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<ServiceResponse<Integer>> updateTicketPerk(@RequestBody TicketPerkDetailsDto ticketPerk, @PathVariable int id) {
+        var response = ticketPerkService.updateTicketPerk(ticketPerk, id);
+
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 }

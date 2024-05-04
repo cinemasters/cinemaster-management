@@ -15,4 +15,7 @@ public interface TicketPerkMapper {
     @Mapping(target = "seatTypeId", source = "seatType.id")
     @Mapping(target = "screeningTypeId", source = "screeningType.id")
     TicketPerkDetailsDto mapToDetailsDto(TicketPerk entity);
+
+    @Mapping(target = "id", ignore = true)
+    TicketPerk mapToEntity(TicketPerkDetailsDto dto);
 }

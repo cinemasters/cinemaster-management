@@ -29,6 +29,12 @@ public class ScreeningTypeService {
         return ServiceResponse.<ScreeningType>builder().data(screeningType).success(screeningType != null).build();
     }
 
+    public boolean hasLinkedPerk(int id) {
+        var screeningType = getScreeningTypeById(id).getData();
+
+        return screeningType == null || screeningType.getPerk() != null;
+    }
+
     public ServiceResponse<Void> createScreeningType(ScreeningType newScreeningType) {
         if (!validateScreeningType(newScreeningType)) {
             return ServiceResponse.<Void>builder().success(false).message("The screening type data is invalid.").build();

@@ -43,6 +43,12 @@ public class SeatTypeService {
         return ServiceResponse.<Void>builder().success(true).build();
     }
 
+    public boolean hasLinkedPerk(int id) {
+        var seatType = getSeatTypeById(id).getData();
+
+        return seatType == null || seatType.getPerk() != null;
+    }
+
     public ServiceResponse<Void> updateSeatType(SeatType newSeatType, int id) {
         var oldSeatType = seatTypeRepository.findById(id).orElse(null);
 
