@@ -14,5 +14,5 @@ public class LayoutSeatDto {
     private int row;
     private boolean isHidden;
     private Integer seatTypeId;
-    private Integer code;
+    private String code;
 }
