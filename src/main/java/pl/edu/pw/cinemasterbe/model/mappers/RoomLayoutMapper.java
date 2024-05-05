@@ -9,18 +9,16 @@ import pl.edu.pw.cinemasterbe.model.dto.RoomLayoutGridDto;
 @Mapper(componentModel = "spring")
 public interface RoomLayoutMapper {
     default RoomLayoutGridDto mapToGridDto(RoomLayout entity) {
-        var dto = RoomLayoutGridDto.builder()
+        return RoomLayoutGridDto.builder()
                 .name(entity.getName())
                 .rowCount(entity.getRowCount())
                 .useCount(0) // TODO
                 .seatCount(Math.toIntExact(entity.getSeats().stream().filter((el) -> !el.isHidden()).count()))
                 .build();
-
-        return dto;
     }
 
     default RoomLayoutDetailsDto mapToDetailsDto(RoomLayout entity) {
-        var dto = RoomLayoutDetailsDto.builder()
+        return RoomLayoutDetailsDto.builder()
                 .name(entity.getName())
                 .rowCount(entity.getRowCount())
                 .columnCount(entity.getColumnCount())
@@ -31,7 +29,5 @@ public interface RoomLayoutMapper {
                         .code(el.getType() == null ? null : el.getType().getCode())
                         .build()).toList())
                 .build();
-
-        return dto;
     }
 }
