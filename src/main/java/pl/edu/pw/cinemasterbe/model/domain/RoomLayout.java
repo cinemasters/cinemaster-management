@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "RoomLayout")
 @Data
@@ -27,5 +29,6 @@ public class RoomLayout {
     private int rowCount;
     @Column(name = "col_count")
     private int columnCount;
-    // TODO: Add seats field
+    @OneToMany(mappedBy = "layout")
+    private List<LayoutSeat> seats;
 }

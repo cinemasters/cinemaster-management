@@ -28,5 +28,4 @@ public class LayoutSeat {
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private SeatType type;
-
 }
