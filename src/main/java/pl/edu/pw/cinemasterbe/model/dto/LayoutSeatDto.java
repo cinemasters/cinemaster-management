@@ -1,5 +1,6 @@
 package pl.edu.pw.cinemasterbe.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,8 @@ public class LayoutSeatDto {
     @Positive
     @Max(30)
     private int row;
-    private boolean isHidden;
+    @JsonProperty("isHidden")
+    private boolean hidden;
     private Integer seatTypeId;
     private String code;
 }

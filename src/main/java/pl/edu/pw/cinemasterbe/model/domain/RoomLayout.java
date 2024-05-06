@@ -26,7 +26,7 @@ public class RoomLayout {
     private int rowCount;
     @Column(name = "col_count")
     private int columnCount;
-    @OneToMany(mappedBy = "layout")
+    @OneToMany(mappedBy = "layout", cascade = CascadeType.ALL)
     @Builder.Default
     private List<LayoutSeat> seats = new ArrayList<>();
 

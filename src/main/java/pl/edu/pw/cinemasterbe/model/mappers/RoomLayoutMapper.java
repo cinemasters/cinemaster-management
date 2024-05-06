@@ -25,7 +25,7 @@ public interface RoomLayoutMapper {
                 .seats(entity.getSeats().stream().map((el) -> LayoutSeatDto.builder()
                         .col(el.getColumn())
                         .row(el.getRow())
-                        .isHidden(el.isHidden())
+                        .hidden(el.isHidden())
                         .code(el.getType() == null ? null : el.getType().getCode())
                         .build()).toList())
                 .build();
