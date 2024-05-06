@@ -9,6 +9,7 @@ import pl.edu.pw.cinemasterbe.model.dto.RoomLayoutDetailsDto;
 import pl.edu.pw.cinemasterbe.model.dto.RoomLayoutGridDto;
 import pl.edu.pw.cinemasterbe.model.mappers.PageMapper;
 import pl.edu.pw.cinemasterbe.model.mappers.RoomLayoutMapper;
+import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.services.RoomLayoutService;
 
 @RestController
@@ -34,5 +35,12 @@ public class RoomLayoutController {
 
         return response.isSuccess() ? ResponseEntity.ok(roomLayoutMapper.mapToDetailsDto(response.getData()))
                 : ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<ServiceResponse<Integer>> createRoomLayout(@RequestBody RoomLayoutDetailsDto roomLayout) {
+        var response = roomLayoutService.createRoomLayout(roomLayout);
+
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 }
