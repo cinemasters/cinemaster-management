@@ -27,7 +27,7 @@ public class MovieDto {
     private Date releaseDate;
     private int length;
     private AgeRestrictionEnum ageRestriction;
-    @JsonProperty('isVisible')
+    @JsonProperty("isVisible")
     private boolean visible;
     private List<Integer> videoTypes;
     private List<Integer> audioTypes;
