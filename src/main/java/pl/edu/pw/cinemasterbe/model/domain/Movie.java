@@ -54,7 +54,7 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private AgeRestrictionEnum ageRestriction;
     @Column(name = "is_visible")
-    private boolean isVisible;
+    private boolean visible;
     @Builder.Default
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "MovieScreeningType", joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
