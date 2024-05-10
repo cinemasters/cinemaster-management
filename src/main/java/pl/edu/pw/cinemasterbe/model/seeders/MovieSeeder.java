@@ -35,7 +35,7 @@ public class MovieSeeder {
                     .title(faker.oscarMovie().movieName())
                     .originalTitle(faker.oscarMovie().movieName())
                     .description(faker.lorem().sentence(30))
-                    .production("%s, %s".formatted(faker.country().name(), faker.oscarMovie().getYear()))
+                    .production("%s, %s".formatted(faker.country().name(), faker.oscarMovie().getYear().substring(1)))
                     .visible(true)
                     .build();
 
