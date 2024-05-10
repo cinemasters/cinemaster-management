@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 import pl.edu.pw.cinemasterbe.model.enums.AgeRestrictionEnum;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Movie")
@@ -56,10 +56,10 @@ public class Movie {
     @Column(name = "is_visible")
     private boolean visible;
     @Builder.Default
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany
     @JoinTable(name = "MovieScreeningType", joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "screening_type_id", referencedColumnName = "id"))
-    private Set<ScreeningType> screeningTypes = new HashSet<>();
+    private List<ScreeningType> screeningTypes = new ArrayList<>();
 
     public void addScreeningType(ScreeningType type) {
         screeningTypes.add(type);
