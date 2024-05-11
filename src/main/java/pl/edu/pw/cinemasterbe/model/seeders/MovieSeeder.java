@@ -18,6 +18,10 @@ public class MovieSeeder {
     private final ScreeningTypeRepository screeningTypeRepository;
 
     public void seed() {
+        if (movieRepository.count() > 0) {
+            return;
+        }
+
         var faker = new Faker();
         var scrTypes = screeningTypeRepository.findAll();
         var videoTypes = scrTypes.stream().filter(el -> el.getType() == ScreeningTypeEnum.Video).toList();

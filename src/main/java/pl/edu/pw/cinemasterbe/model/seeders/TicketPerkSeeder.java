@@ -19,6 +19,10 @@ public class TicketPerkSeeder {
     private final ScreeningTypeRepository screeningTypeRepository;
 
     public void seed() {
+        if (ticketPerkRepository.count() > 0) {
+            return;
+        }
+
         var ticketPerks = new ArrayList<TicketPerk>();
 
         for (var seatType : seatTypeRepository.findAll().subList(0, 2)) {

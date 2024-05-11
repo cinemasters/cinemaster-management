@@ -13,6 +13,10 @@ public class SeatTypeSeeder {
     private final SeatTypeRepository seatTypeRepository;
 
     public void seed() {
+        if (seatTypeRepository.count() > 0) {
+            return;
+        }
+
         var seatTypes = new ArrayList<SeatType>();
 
         for (int i = 1; i < 8; i++) {

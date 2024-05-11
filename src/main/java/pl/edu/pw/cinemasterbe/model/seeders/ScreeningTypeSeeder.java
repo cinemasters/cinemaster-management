@@ -14,6 +14,10 @@ public class ScreeningTypeSeeder {
     private final ScreeningTypeRepository repository;
 
     public void seed() {
+        if (repository.count() > 0) {
+            return;
+        }
+
         var screeningTypes = List.of(ScreeningType.builder().name("3D").type(ScreeningTypeEnum.Video).description("Filmy 3D").build(),
                 ScreeningType.builder().name("2D").type(ScreeningTypeEnum.Video).description("Filmy 2D").build(),
                 ScreeningType.builder().name("Dźwięk oryginalny").type(ScreeningTypeEnum.Audio).description("Film z dźwiękiem oryginalnym").build(),

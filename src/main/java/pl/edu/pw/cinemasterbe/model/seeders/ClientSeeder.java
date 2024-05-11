@@ -14,6 +14,10 @@ public class ClientSeeder {
     private final PasswordEncoder passwordEncoder;
 
     public void seed() {
+        if (clientRepository.count() > 0) {
+            return;
+        }
+
         var faker = new Faker();
 
         for (int i = 0; i < 50; i++) {
