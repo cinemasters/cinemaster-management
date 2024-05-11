@@ -3,6 +3,7 @@ package pl.edu.pw.cinemasterbe.model.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class Client {
     private String password;
     @Size(max = 16)
     @Column(name = "phone_number")
+    @Pattern(regexp = "(|[0-9]{9})")
     private String phoneNumber;
     @Column(name = "is_offer_subscribed")
     private boolean offerSubscribed;
