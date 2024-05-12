@@ -96,6 +96,6 @@ public class ClientService {
     }
 
     private boolean isNullOrEmpty(String elem) {
-        return elem == null || elem.isEmpty();
+        return elem == null || elem.trim().isEmpty();
     }
 }
