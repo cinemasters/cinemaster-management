@@ -1,6 +1,5 @@
 package pl.edu.pw.cinemasterbe.services;
 
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,7 +13,8 @@ import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.MovieRepository;
 
 import java.time.temporal.ChronoUnit;
-import java.util.Set;
+
+import static pl.edu.pw.cinemasterbe.utils.ServiceUtils.buildErrorMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -102,15 +102,5 @@ public class MovieService {
         }
 
         return ServiceResponse.<Movie>builder().success(true).data(movie).build();
-    }
-
-    private <T> String buildErrorMessage(Set<ConstraintViolation<T>> violations) {
-        var builder = new StringBuilder();
-
-        for (var v : violations) {
-            builder.append(v.getMessage()).append(" ");
-        }
-
-        return builder.toString().strip();
     }
 }

@@ -1,6 +1,5 @@
 package pl.edu.pw.cinemasterbe.services;
 
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,8 +12,9 @@ import pl.edu.pw.cinemasterbe.model.mappers.ClientMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.ClientRepository;
 
-import java.util.Set;
 import java.util.regex.Pattern;
+
+import static pl.edu.pw.cinemasterbe.utils.ServiceUtils.buildErrorMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -83,16 +83,6 @@ public class ClientService {
         }
 
         return Pattern.compile("[A-Za-z0-9!@#$%]{4,16}").matcher(password).matches();
-    }
-
-    private <T> String buildErrorMessage(Set<ConstraintViolation<T>> violations) {
-        var builder = new StringBuilder();
-
-        for (var v : violations) {
-            builder.append(v.getMessage()).append(" ");
-        }
-
-        return builder.toString().strip();
     }
 
     private boolean isNullOrEmpty(String elem) {

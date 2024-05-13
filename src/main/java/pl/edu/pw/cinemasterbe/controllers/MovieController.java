@@ -60,6 +60,4 @@ public class MovieController {
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
-
-
 }
