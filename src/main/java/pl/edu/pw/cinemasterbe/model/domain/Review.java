@@ -24,6 +24,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Size(max = 2048)
+    @Column(name = "user_comment")
     private String comment;
     @Min(0)
     @Max(5)

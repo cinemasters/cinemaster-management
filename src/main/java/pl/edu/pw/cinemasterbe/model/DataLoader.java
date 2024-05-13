@@ -15,6 +15,7 @@ public class DataLoader implements CommandLineRunner {
     private final TicketPerkSeeder ticketPerkSeeder;
     private final MovieSeeder movieSeeder;
     private final ClientSeeder clientSeeder;
+    private final ReviewSeeder reviewSeeder;
 
     @Override
     public void run(String... args) {
@@ -25,5 +26,6 @@ public class DataLoader implements CommandLineRunner {
         ticketPerkSeeder.seed();
         movieSeeder.seed();
         clientSeeder.seed();
+        reviewSeeder.seed();
     }
 }
