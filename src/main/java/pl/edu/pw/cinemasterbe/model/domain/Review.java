@@ -39,4 +39,10 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
+
+    public boolean toggleVisibility() {
+        hidden = !hidden;
+
+        return hidden;
+    }
 }
