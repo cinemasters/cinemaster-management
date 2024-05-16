@@ -1,6 +1,7 @@
 package pl.edu.pw.cinemasterbe.model.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class CinemaOpeningTime {
     private int id;
     @Enumerated(EnumType.STRING)
     @Column(name = "week_day")
+    @NotNull
     private DayEnum day;
     @Column(name = "opening_time")
     private Time openingTime;
@@ -28,4 +30,7 @@ public class CinemaOpeningTime {
     private Time closingTime;
     @Column(name = "is_closed")
     private boolean closed;
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
+    private Cinema cinema;
 }
