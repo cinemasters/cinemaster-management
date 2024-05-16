@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.edu.pw.cinemasterbe.model.enums.DayEnum;
 
 import java.sql.Time;
+import java.time.DayOfWeek;
 
 @Entity
 @Table(name = "CinemaOpeningTime")
@@ -23,7 +23,7 @@ public class CinemaOpeningTime {
     @Enumerated(EnumType.STRING)
     @Column(name = "week_day")
     @NotNull
-    private DayEnum day;
+    private DayOfWeek day;
     @Column(name = "opening_time")
     private Time openingTime;
     @Column(name = "closing_time")
