@@ -1,0 +1,10 @@
+package pl.edu.pw.cinemasterbe.model.mappers;
+
+import org.mapstruct.Mapper;
+import pl.edu.pw.cinemasterbe.model.domain.Cinema;
+import pl.edu.pw.cinemasterbe.model.dto.CinemaGridDto;
+
+@Mapper(componentModel = "spring")
+public interface CinemaMapper {
+    CinemaGridDto mapToGridDto(Cinema entity);
+}
