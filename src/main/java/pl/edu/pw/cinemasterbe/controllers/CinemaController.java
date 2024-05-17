@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaOpeningTime;
 import pl.edu.pw.cinemasterbe.model.dto.PageDto;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaGridDto;
 import pl.edu.pw.cinemasterbe.model.mappers.CinemaMapper;
@@ -38,23 +39,26 @@ public class CinemaController {
             var currentDay = LocalDate.now().getDayOfWeek();
             var currentOpening = cinema.getOpeningTimes().stream().filter((el) -> el.getDay() == currentDay).findFirst().orElseThrow();
 
-            if (currentOpening.isClosed()) {
-                dto.setOpen(false);
-            } else {
-                var currentTime = Instant.now();
-                var opening = currentTime.atZone(ZoneId.systemDefault())
-                        .withHour(currentOpening.getOpeningTime().getHours()).withMinute(currentOpening.getOpeningTime().getMinutes()).withSecond(0).toInstant();
-                var closing = currentTime.atZone(ZoneId.systemDefault())
-                        .withHour(currentOpening.getClosingTime().getHours()).withMinute(currentOpening.getClosingTime().getMinutes()).withSecond(0).toInstant();
-
-                dto.setOpen(currentTime.isAfter(opening) && currentTime.isBefore(closing));
-            }
-
+            dto.setOpen(isCinemaOpen(currentOpening));
             cinemaDtos.add(dto);
         }
 
         pageDto.setItems(cinemaDtos);
 
         return ResponseEntity.ok(pageDto);
+    }
+
+    private boolean isCinemaOpen(CinemaOpeningTime openingTime) {
+        if (openingTime.isClosed()) {
+            return false;
+        }
+
+        var currentTime = Instant.now();
+        var opening = currentTime.atZone(ZoneId.systemDefault())
+                .withHour(openingTime.getOpeningTime().getHours()).withMinute(openingTime.getOpeningTime().getMinutes()).withSecond(0).toInstant();
+        var closing = currentTime.atZone(ZoneId.systemDefault())
+                .withHour(openingTime.getClosingTime().getHours()).withMinute(openingTime.getClosingTime().getMinutes()).withSecond(0).toInstant();
+
+        return currentTime.isAfter(opening) && currentTime.isBefore(closing);
     }
 }
