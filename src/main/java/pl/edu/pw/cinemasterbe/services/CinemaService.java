@@ -76,12 +76,12 @@ public class CinemaService {
                 continue;
             }
 
-            if (timeDto.getOpeningHour() == null || timeDto.getClosingHour() == null) {
+            if (timeDto.getOpeningTime() == null || timeDto.getClosingTime() == null) {
                 return ServiceResponse.<Cinema>builder().success(false).message("Time must be provided for non-closed day.").build();
             }
 
-            var opening = Time.valueOf(timeDto.getOpeningHour());
-            var closing = Time.valueOf(timeDto.getClosingHour());
+            var opening = Time.valueOf(timeDto.getOpeningTime());
+            var closing = Time.valueOf(timeDto.getClosingTime());
 
             if (opening.compareTo(closing) >= 0) {
                 return ServiceResponse.<Cinema>builder().success(false).message("Time range must be valid.").build();

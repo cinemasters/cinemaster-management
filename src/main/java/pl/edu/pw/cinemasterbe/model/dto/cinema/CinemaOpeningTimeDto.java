@@ -13,7 +13,7 @@ import java.time.DayOfWeek;
 @NoArgsConstructor
 public class CinemaOpeningTimeDto {
     private DayOfWeek day;
-    private String openingHour;
-    private String closingHour;
+    private String openingTime;
+    private String closingTime;
     private boolean closed;
 }
