@@ -50,9 +50,31 @@ public class CinemaController {
         return ResponseEntity.ok(pageDto);
     }
 
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<CinemaDetailsDto> getCinema(@PathVariable int id) {
+        var data = cinemaService.getCinema(id);
+
+        if (data == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        var dto = cinemaMapper.mapToDetailsDto(data);
+
+        dto.setOpeningHours(data.getOpeningTimes().stream().map(cinemaMapper::mapToOpeningTimeDto).toList());
+
+        return ResponseEntity.ok(dto);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ServiceResponse<Integer>> createCinema(@RequestBody CinemaDetailsDto dto) {
         var response = cinemaService.createCinema(dto);
+
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<ServiceResponse<Integer>> updateCinema(@RequestBody CinemaDetailsDto dto, @PathVariable int id) {
+        var response = cinemaService.updateCinema(dto, id);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }

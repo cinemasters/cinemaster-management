@@ -29,6 +29,10 @@ public class CinemaService {
         return cinemaRepository.findAll(pageRequest);
     }
 
+    public Cinema getCinema(int id) {
+        return cinemaRepository.findById(id).orElse(null);
+    }
+
     public ServiceResponse<Integer> createCinema(CinemaDetailsDto dto) {
         var response = buildCinemaFromDto(dto);
 
@@ -39,6 +43,27 @@ public class CinemaService {
         var newMovie = cinemaRepository.save(response.getData());
 
         return ServiceResponse.<Integer>builder().success(true).data(newMovie.getId()).build();
+    }
+
+    public ServiceResponse<Integer> updateCinema(CinemaDetailsDto dto, int id) {
+        var oldCinema = getCinema(id);
+
+        if (oldCinema == null) {
+            return ServiceResponse.<Integer>builder().success(false).message("Cinema with id %d does not exist.".formatted(id)).build();
+        }
+
+        var response = buildCinemaFromDto(dto);
+
+        if (!response.isSuccess()) {
+            return ServiceResponse.<Integer>builder().success(false).message(response.getMessage()).build();
+        }
+
+        var updatedCinema = response.getData();
+
+        updatedCinema.setId(id);
+        updatedCinema = cinemaRepository.save(updatedCinema);
+
+        return ServiceResponse.<Integer>builder().success(true).data(updatedCinema.getId()).build();
     }
 
     private ServiceResponse<Cinema> buildCinemaFromDto(CinemaDetailsDto dto) {
