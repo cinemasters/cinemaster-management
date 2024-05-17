@@ -3,7 +3,7 @@ package pl.edu.pw.cinemasterbe.model.seeders;
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
-import pl.edu.pw.cinemasterbe.model.domain.Movie;
+import pl.edu.pw.cinemasterbe.model.domain.movie.Movie;
 import pl.edu.pw.cinemasterbe.model.enums.AgeRestrictionEnum;
 import pl.edu.pw.cinemasterbe.model.enums.ScreeningTypeEnum;
 import pl.edu.pw.cinemasterbe.repositories.MovieRepository;

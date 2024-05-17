@@ -2,9 +2,9 @@ package pl.edu.pw.cinemasterbe.model.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pl.edu.pw.cinemasterbe.model.domain.Review;
-import pl.edu.pw.cinemasterbe.model.dto.ReviewDetailsDto;
-import pl.edu.pw.cinemasterbe.model.dto.ReviewGridDto;
+import pl.edu.pw.cinemasterbe.model.domain.movie.Review;
+import pl.edu.pw.cinemasterbe.model.dto.movie.ReviewDetailsDto;
+import pl.edu.pw.cinemasterbe.model.dto.movie.ReviewGridDto;
 
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {

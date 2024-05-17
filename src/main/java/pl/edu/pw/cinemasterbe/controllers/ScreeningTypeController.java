@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.cinemasterbe.model.dto.PageDto;
-import pl.edu.pw.cinemasterbe.model.dto.ScreeningTypeDto;
+import pl.edu.pw.cinemasterbe.model.dto.movie.ScreeningTypeDto;
 import pl.edu.pw.cinemasterbe.model.mappers.PageMapper;
 import pl.edu.pw.cinemasterbe.model.mappers.ScreeningTypeMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;

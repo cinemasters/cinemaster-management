@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.cinemasterbe.model.dto.PageDto;
-import pl.edu.pw.cinemasterbe.model.dto.SeatTypeDto;
+import pl.edu.pw.cinemasterbe.model.dto.cinema.SeatTypeDto;
 import pl.edu.pw.cinemasterbe.model.mappers.PageMapper;
 import pl.edu.pw.cinemasterbe.model.mappers.SeatTypeMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;

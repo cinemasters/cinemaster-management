@@ -1,4 +1,4 @@
-package pl.edu.pw.cinemasterbe.model.dto;
+package pl.edu.pw.cinemasterbe.model.dto.ticket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +12,12 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketPerkDetailsDto {
+public class TicketPerkGridDto {
     private int id;
     private String name;
     private String description;
     private BigDecimal charge;
     private TicketPerkEnum type;
-    private Integer seatTypeId;
-    private Integer screeningTypeId;
+    private String seatTypeName;
+    private String screeningTypeName;
 }

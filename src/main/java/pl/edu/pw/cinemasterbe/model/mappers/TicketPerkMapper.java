@@ -2,9 +2,9 @@ package pl.edu.pw.cinemasterbe.model.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pl.edu.pw.cinemasterbe.model.domain.TicketPerk;
-import pl.edu.pw.cinemasterbe.model.dto.TicketPerkDetailsDto;
-import pl.edu.pw.cinemasterbe.model.dto.TicketPerkGridDto;
+import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketPerk;
+import pl.edu.pw.cinemasterbe.model.dto.ticket.TicketPerkDetailsDto;
+import pl.edu.pw.cinemasterbe.model.dto.ticket.TicketPerkGridDto;
 
 @Mapper(componentModel = "spring")
 public interface TicketPerkMapper {

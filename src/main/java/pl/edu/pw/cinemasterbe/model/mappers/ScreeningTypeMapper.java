@@ -1,8 +1,8 @@
 package pl.edu.pw.cinemasterbe.model.mappers;
 
 import org.mapstruct.Mapper;
-import pl.edu.pw.cinemasterbe.model.domain.ScreeningType;
-import pl.edu.pw.cinemasterbe.model.dto.ScreeningTypeDto;
+import pl.edu.pw.cinemasterbe.model.domain.movie.ScreeningType;
+import pl.edu.pw.cinemasterbe.model.dto.movie.ScreeningTypeDto;
 
 @Mapper(componentModel = "spring")
 public interface ScreeningTypeMapper {

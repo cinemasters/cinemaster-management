@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.pw.cinemasterbe.model.dto.CinemaGridDto;
 import pl.edu.pw.cinemasterbe.model.dto.PageDto;
+import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaGridDto;
 import pl.edu.pw.cinemasterbe.model.mappers.CinemaMapper;
 import pl.edu.pw.cinemasterbe.services.CinemaService;
 

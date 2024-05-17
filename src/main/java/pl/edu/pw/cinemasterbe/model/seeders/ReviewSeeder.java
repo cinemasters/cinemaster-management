@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 import pl.edu.pw.cinemasterbe.model.domain.Client;
-import pl.edu.pw.cinemasterbe.model.domain.Movie;
-import pl.edu.pw.cinemasterbe.model.domain.Review;
+import pl.edu.pw.cinemasterbe.model.domain.movie.Movie;
+import pl.edu.pw.cinemasterbe.model.domain.movie.Review;
 import pl.edu.pw.cinemasterbe.repositories.ClientRepository;
 import pl.edu.pw.cinemasterbe.repositories.MovieRepository;
 import pl.edu.pw.cinemasterbe.repositories.ReviewRepository;
@@ -40,7 +40,7 @@ public class ReviewSeeder {
                     .publicationDate(faker.date().birthday().toInstant())
                     .comment(faker.restaurant().review())
                     .build();
-            
+
             reviewRepository.save(review);
         }
     }

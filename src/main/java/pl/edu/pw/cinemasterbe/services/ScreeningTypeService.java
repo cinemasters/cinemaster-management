@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.edu.pw.cinemasterbe.model.domain.ScreeningType;
+import pl.edu.pw.cinemasterbe.model.domain.movie.ScreeningType;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.ScreeningTypeRepository;
 

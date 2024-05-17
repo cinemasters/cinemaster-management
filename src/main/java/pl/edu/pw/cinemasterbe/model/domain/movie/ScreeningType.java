@@ -1,32 +1,33 @@
-package pl.edu.pw.cinemasterbe.model.domain;
+package pl.edu.pw.cinemasterbe.model.domain.movie;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
+import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketPerk;
+import pl.edu.pw.cinemasterbe.model.enums.ScreeningTypeEnum;
 
 @Entity
-@Table(name = "TicketType")
+@Table(name = "ScreeningType")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketType {
+public class ScreeningType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Size(min = 1, max = 64)
+    @Enumerated(EnumType.STRING)
     @NotNull
+    private ScreeningTypeEnum type;
+    @NotNull
+    @Size(min = 1, max = 64)
     private String name;
     @Size(max = 255)
     private String description;
-    @Positive
-    @NotNull
-    private BigDecimal price;
+    @OneToOne(mappedBy = "screeningType")
+    private TicketPerk perk;
 }

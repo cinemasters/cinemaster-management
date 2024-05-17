@@ -2,7 +2,7 @@ package pl.edu.pw.cinemasterbe.model.seeders;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.edu.pw.cinemasterbe.model.domain.TicketType;
+import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketType;
 import pl.edu.pw.cinemasterbe.repositories.TicketTypeRepository;
 
 import java.math.BigDecimal;

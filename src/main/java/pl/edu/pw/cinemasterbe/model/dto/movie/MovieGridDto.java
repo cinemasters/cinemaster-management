@@ -1,4 +1,4 @@
-package pl.edu.pw.cinemasterbe.model.dto;
+package pl.edu.pw.cinemasterbe.model.dto.movie;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

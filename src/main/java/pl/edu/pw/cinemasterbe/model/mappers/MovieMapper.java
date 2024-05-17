@@ -1,9 +1,9 @@
 package pl.edu.pw.cinemasterbe.model.mappers;
 
 import org.mapstruct.Mapper;
-import pl.edu.pw.cinemasterbe.model.domain.Movie;
-import pl.edu.pw.cinemasterbe.model.dto.MovieDto;
-import pl.edu.pw.cinemasterbe.model.dto.MovieGridDto;
+import pl.edu.pw.cinemasterbe.model.domain.movie.Movie;
+import pl.edu.pw.cinemasterbe.model.dto.movie.MovieDto;
+import pl.edu.pw.cinemasterbe.model.dto.movie.MovieGridDto;
 
 @Mapper(componentModel = "spring")
 public interface MovieMapper {

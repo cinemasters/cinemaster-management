@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.edu.pw.cinemasterbe.model.domain.TicketPerk;
+import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketPerk;
 
 @Entity
 @Table(name = "SeatType")

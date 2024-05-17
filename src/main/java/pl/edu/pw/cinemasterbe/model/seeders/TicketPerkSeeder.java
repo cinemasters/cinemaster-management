@@ -2,7 +2,7 @@ package pl.edu.pw.cinemasterbe.model.seeders;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.edu.pw.cinemasterbe.model.domain.TicketPerk;
+import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketPerk;
 import pl.edu.pw.cinemasterbe.model.enums.TicketPerkEnum;
 import pl.edu.pw.cinemasterbe.repositories.ScreeningTypeRepository;
 import pl.edu.pw.cinemasterbe.repositories.SeatTypeRepository;

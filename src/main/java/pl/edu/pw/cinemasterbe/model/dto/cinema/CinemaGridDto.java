@@ -1,4 +1,4 @@
-package pl.edu.pw.cinemasterbe.model.dto;
+package pl.edu.pw.cinemasterbe.model.dto.cinema;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

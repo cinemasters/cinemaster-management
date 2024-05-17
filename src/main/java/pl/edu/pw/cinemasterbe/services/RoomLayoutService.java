@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.LayoutSeat;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.RoomLayout;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.SeatType;
-import pl.edu.pw.cinemasterbe.model.dto.RoomLayoutDetailsDto;
+import pl.edu.pw.cinemasterbe.model.dto.cinema.RoomLayoutDetailsDto;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.RoomLayoutRepository;
 

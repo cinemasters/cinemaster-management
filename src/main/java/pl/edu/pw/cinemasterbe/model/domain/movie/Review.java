@@ -1,4 +1,4 @@
-package pl.edu.pw.cinemasterbe.model.domain;
+package pl.edu.pw.cinemasterbe.model.domain.movie;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.edu.pw.cinemasterbe.model.domain.Client;
 
 import java.math.BigDecimal;
 import java.time.Instant;

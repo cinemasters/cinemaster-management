@@ -2,7 +2,7 @@ package pl.edu.pw.cinemasterbe.model.seeders;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.edu.pw.cinemasterbe.model.domain.ScreeningType;
+import pl.edu.pw.cinemasterbe.model.domain.movie.ScreeningType;
 import pl.edu.pw.cinemasterbe.model.enums.ScreeningTypeEnum;
 import pl.edu.pw.cinemasterbe.repositories.ScreeningTypeRepository;
 

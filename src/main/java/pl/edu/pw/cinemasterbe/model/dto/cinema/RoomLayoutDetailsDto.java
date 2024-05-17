@@ -1,4 +1,4 @@
-package pl.edu.pw.cinemasterbe.model.dto;
+package pl.edu.pw.cinemasterbe.model.dto.cinema;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
