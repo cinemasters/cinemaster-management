@@ -2,7 +2,7 @@ package pl.edu.pw.cinemasterbe.model.seeders;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.edu.pw.cinemasterbe.model.domain.SeatType;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.SeatType;
 import pl.edu.pw.cinemasterbe.repositories.SeatTypeRepository;
 
 import java.util.ArrayList;

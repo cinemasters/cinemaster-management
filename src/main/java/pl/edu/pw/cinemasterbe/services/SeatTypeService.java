@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.edu.pw.cinemasterbe.model.domain.SeatType;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.SeatType;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.SeatTypeRepository;
 

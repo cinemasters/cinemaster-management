@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import pl.edu.pw.cinemasterbe.model.domain.Cinema;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.Cinema;
 import pl.edu.pw.cinemasterbe.repositories.CinemaRepository;
 
 @Service

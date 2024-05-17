@@ -1,4 +1,4 @@
-package pl.edu.pw.cinemasterbe.model.domain;
+package pl.edu.pw.cinemasterbe.model.domain.cinema;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.edu.pw.cinemasterbe.model.domain.TicketPerk;
 
 @Entity
 @Table(name = "SeatType")

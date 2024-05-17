@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.SeatType;
 import pl.edu.pw.cinemasterbe.model.enums.TicketPerkEnum;
 
 import java.math.BigDecimal;

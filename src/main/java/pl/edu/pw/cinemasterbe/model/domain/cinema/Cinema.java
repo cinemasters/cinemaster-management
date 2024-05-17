@@ -1,4 +1,4 @@
-package pl.edu.pw.cinemasterbe.model.domain;
+package pl.edu.pw.cinemasterbe.model.domain.cinema;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

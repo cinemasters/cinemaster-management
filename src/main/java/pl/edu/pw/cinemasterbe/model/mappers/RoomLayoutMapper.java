@@ -1,7 +1,7 @@
 package pl.edu.pw.cinemasterbe.model.mappers;
 
 import org.mapstruct.Mapper;
-import pl.edu.pw.cinemasterbe.model.domain.RoomLayout;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.RoomLayout;
 import pl.edu.pw.cinemasterbe.model.dto.LayoutSeatDto;
 import pl.edu.pw.cinemasterbe.model.dto.RoomLayoutDetailsDto;
 import pl.edu.pw.cinemasterbe.model.dto.RoomLayoutGridDto;
