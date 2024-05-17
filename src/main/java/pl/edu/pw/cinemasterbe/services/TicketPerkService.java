@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.View;
 import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketPerk;
 import pl.edu.pw.cinemasterbe.model.dto.ticket.TicketPerkDetailsDto;
 import pl.edu.pw.cinemasterbe.model.enums.TicketPerkEnum;
@@ -23,7 +22,6 @@ public class TicketPerkService {
     private final SeatTypeService seatTypeService;
     private final TicketPerkMapper mapper;
     private final Validator validator;
-    private final View error;
 
     public ServiceResponse<Page<TicketPerk>> getTicketPerks(PageRequest pageRequest) {
         var ticketPerks = ticketPerkRepository.findAll(pageRequest);

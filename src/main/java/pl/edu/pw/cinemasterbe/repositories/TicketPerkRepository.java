@@ -6,7 +6,4 @@ import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketPerk;
 
 @Repository
 public interface TicketPerkRepository extends JpaRepository<TicketPerk, Integer> {
-    boolean existsByScreeningTypeId(int id);
-
-    boolean existsBySeatTypeId(int id);
 }
