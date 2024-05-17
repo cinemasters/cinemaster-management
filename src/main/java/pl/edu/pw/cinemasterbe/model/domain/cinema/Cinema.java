@@ -43,6 +43,7 @@ public class Cinema {
     @Pattern(regexp = "(|[0-9]{9})")
     @Column(name = "phone_number")
     private String phoneNumber;
+    @Builder.Default
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
     private List<CinemaOpeningTime> openingTimes = new ArrayList<>();
 

@@ -14,7 +14,6 @@ import pl.edu.pw.cinemasterbe.repositories.CinemaRepository;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import static pl.edu.pw.cinemasterbe.utils.ServiceUtils.buildErrorMessage;
@@ -55,8 +54,6 @@ public class CinemaService {
         if (dto.getOpeningHours() == null || dto.getOpeningHours().size() != 7) {
             return ServiceResponse.<Cinema>builder().success(false).message("Opening times for all days of the week must be provided.").build();
         }
-
-        cinema.setOpeningTimes(new ArrayList<>());
 
         for (var timeDto : dto.getOpeningHours()) {
             var openTime = CinemaOpeningTime.builder()
