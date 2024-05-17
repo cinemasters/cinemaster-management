@@ -6,8 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaOpeningTime;
 import pl.edu.pw.cinemasterbe.model.dto.PageDto;
+import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaDetailsDto;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaGridDto;
 import pl.edu.pw.cinemasterbe.model.mappers.CinemaMapper;
+import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.services.CinemaService;
 
 import java.time.Instant;
@@ -24,7 +26,7 @@ public class CinemaController {
     private final CinemaMapper cinemaMapper;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<PageDto<CinemaGridDto>> getMovies(@RequestParam(defaultValue = "0", required = false) int page, @RequestParam(defaultValue = "50", required = false) int size) {
+    public ResponseEntity<PageDto<CinemaGridDto>> getCinemas(@RequestParam(defaultValue = "0", required = false) int page, @RequestParam(defaultValue = "50", required = false) int size) {
         var pageRequest = PageRequest.of(page, size);
         var data = cinemaService.getCinemas(pageRequest);
         var pageDto = PageDto.<CinemaGridDto>builder()
@@ -46,6 +48,13 @@ public class CinemaController {
         pageDto.setItems(cinemaDtos);
 
         return ResponseEntity.ok(pageDto);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<ServiceResponse<Integer>> createCinema(@RequestBody CinemaDetailsDto dto) {
+        var response = cinemaService.createCinema(dto);
+
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 
     private boolean isCinemaOpen(CinemaOpeningTime openingTime) {
