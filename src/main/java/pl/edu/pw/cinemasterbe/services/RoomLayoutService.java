@@ -52,7 +52,7 @@ public class RoomLayoutService {
             SeatType seatType = null;
 
             if (seatDto.getSeatTypeId() != null) {
-                seatType = seatTypeService.getSeatTypeById(seatDto.getSeatTypeId()).getData();
+                seatType = seatTypeService.getSeatType(seatDto.getSeatTypeId());
 
                 if (seatType == null) {
                     return ServiceResponse.<Integer>builder().success(false).message("The seat type id %d does not exist.".formatted(seatDto.getSeatTypeId())).build();

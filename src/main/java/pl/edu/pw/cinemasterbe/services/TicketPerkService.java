@@ -39,7 +39,7 @@ public class TicketPerkService {
         var newTicketPerk = mapper.mapToEntity(dto);
 
         if (newTicketPerk.getType() == TicketPerkEnum.SeatType) {
-            var seatType = seatTypeService.getSeatTypeById(dto.getSeatTypeId()).getData();
+            var seatType = seatTypeService.getSeatType(dto.getSeatTypeId());
 
             if (seatType == null || seatTypeService.hasLinkedPerk(seatType.getId())) {
                 return ServiceResponse.<Integer>builder().success(false).message("The seat type is invalid or is already in use.").build();
@@ -79,7 +79,7 @@ public class TicketPerkService {
         var newTicketPerk = mapper.mapToEntity(dto);
 
         if (newTicketPerk.getType() == TicketPerkEnum.SeatType) {
-            var seatType = seatTypeService.getSeatTypeById(dto.getSeatTypeId()).getData();
+            var seatType = seatTypeService.getSeatType(dto.getSeatTypeId());
 
             if (seatType == null || (seatTypeService.hasLinkedPerk(seatType.getId()) && seatType.getId() != oldTicketPerk.getSeatType().getId())) {
                 return ServiceResponse.<Integer>builder().success(false).message("The seat type is invalid or is already in use.").build();

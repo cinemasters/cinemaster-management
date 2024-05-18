@@ -25,35 +25,35 @@ public class SeatTypeController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<PageDto<SeatTypeDto>> getSeatTypes(@RequestParam(defaultValue = "0", required = false) int page, @RequestParam(defaultValue = "50", required = false) int size) {
         var pageRequest = PageRequest.of(page, size);
-        var response = seatTypeService.getSeatTypes(pageRequest);
+        var data = seatTypeService.getSeatTypes(pageRequest);
 
-        return ResponseEntity.ok(pageMapper.map(response.getData(), seatTypeMapper::map));
+        return ResponseEntity.ok(pageMapper.map(data, seatTypeMapper::mapToDto));
     }
 
     @RequestMapping(path = "/usable", method = RequestMethod.GET)
     public ResponseEntity<Iterable<SeatTypeDto>> getUsableSeatTypes(@RequestParam(defaultValue = "-1", required = false) int perkId) {
-        var response = seatTypeService.getUsableSeatTypes(perkId);
+        var data = seatTypeService.getUsableSeatTypes(perkId);
 
-        return ResponseEntity.ok(StreamSupport.stream(response.getData().spliterator(), false).map(seatTypeMapper::map).toList());
+        return ResponseEntity.ok(StreamSupport.stream(data.spliterator(), false).map(seatTypeMapper::mapToDto).toList());
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<SeatTypeDto> getSeatType(@PathVariable int id) {
-        var response = seatTypeService.getSeatTypeById(id);
+        var seatType = seatTypeService.getSeatType(id);
 
-        return response.isSuccess() ? ResponseEntity.ok(seatTypeMapper.map(response.getData())) : ResponseEntity.noContent().build();
+        return seatType != null ? ResponseEntity.ok(seatTypeMapper.mapToDto(seatType)) : ResponseEntity.noContent().build();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ServiceResponse<Void>> createSeatType(@RequestBody SeatTypeDto seatType) {
-        var response = seatTypeService.createSeatType(seatTypeMapper.mapToEntity(seatType));
+    public ResponseEntity<ServiceResponse<Integer>> createSeatType(@RequestBody SeatTypeDto seatType) {
+        var response = seatTypeService.createSeatType(seatType);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ServiceResponse<Void>> updateSeatType(@RequestBody SeatTypeDto seatType, @PathVariable int id) {
-        var response = seatTypeService.updateSeatType(seatTypeMapper.mapToEntity(seatType), id);
+    public ResponseEntity<ServiceResponse<Integer>> updateSeatType(@RequestBody SeatTypeDto seatType, @PathVariable int id) {
+        var response = seatTypeService.updateSeatType(seatType, id);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
