@@ -23,28 +23,28 @@ public class TicketTypeController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<PageDto<TicketTypeDto>> getTicketTypes(@RequestParam(defaultValue = "0", required = false) int page, @RequestParam(defaultValue = "50", required = false) int size) {
         var pageRequest = PageRequest.of(page, size);
-        var response = ticketTypeService.getTicketTypes(pageRequest);
+        var data = ticketTypeService.getTicketTypes(pageRequest);
 
-        return ResponseEntity.ok(pageMapper.map(response.getData(), ticketTypeMapper::mapToDto));
+        return ResponseEntity.ok(pageMapper.map(data, ticketTypeMapper::mapToDto));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<TicketTypeDto> getTicketType(@PathVariable int id) {
-        var response = ticketTypeService.getTicketTypeById(id);
+        var ticketType = ticketTypeService.getTicketTypeById(id);
 
-        return response.isSuccess() ? ResponseEntity.ok(ticketTypeMapper.mapToDto(response.getData())) : ResponseEntity.noContent().build();
+        return ticketType != null ? ResponseEntity.ok(ticketTypeMapper.mapToDto(ticketType)) : ResponseEntity.noContent().build();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ServiceResponse<Void>> createTicketType(@RequestBody TicketTypeDto seatType) {
-        var response = ticketTypeService.createTicketType(ticketTypeMapper.mapToEntity(seatType));
+    public ResponseEntity<ServiceResponse<Integer>> createTicketType(@RequestBody TicketTypeDto seatType) {
+        var response = ticketTypeService.createTicketType(seatType);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ServiceResponse<Void>> updateTicketType(@RequestBody TicketTypeDto seatType, @PathVariable int id) {
-        var response = ticketTypeService.updateTicketType(ticketTypeMapper.mapToEntity(seatType), id);
+    public ResponseEntity<ServiceResponse<Integer>> updateTicketType(@RequestBody TicketTypeDto seatType, @PathVariable int id) {
+        var response = ticketTypeService.updateTicketType(seatType, id);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }

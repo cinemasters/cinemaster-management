@@ -6,59 +6,79 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketType;
+import pl.edu.pw.cinemasterbe.model.dto.ticket.TicketTypeDto;
+import pl.edu.pw.cinemasterbe.model.mappers.TicketTypeMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.TicketTypeRepository;
+
+import static pl.edu.pw.cinemasterbe.utils.ServiceUtils.buildErrorMessage;
 
 @Service
 @RequiredArgsConstructor
 public class TicketTypeService {
     private final TicketTypeRepository ticketTypeRepository;
     private final Validator validator;
+    private final TicketTypeMapper ticketTypeMapper;
 
-    public ServiceResponse<Page<TicketType>> getTicketTypes(Pageable pageRequest) {
-        return ServiceResponse.<Page<TicketType>>builder().success(true).data(ticketTypeRepository.findAll(pageRequest)).build();
+    public Page<TicketType> getTicketTypes(Pageable pageRequest) {
+        return ticketTypeRepository.findAll(pageRequest);
     }
 
-    public ServiceResponse<TicketType> getTicketTypeById(int id) {
-        var ticketType = ticketTypeRepository.findById(id).orElse(null);
-
-        return ServiceResponse.<TicketType>builder().data(ticketType).success(ticketType != null).build();
+    public TicketType getTicketTypeById(int id) {
+        return ticketTypeRepository.findById(id).orElse(null);
     }
 
-    public ServiceResponse<Void> createTicketType(TicketType newTicketType) {
-        if (!validateTicketType(newTicketType)) {
-            return ServiceResponse.<Void>builder().success(false).message("The ticket type data is invalid.").build();
-        }
-        if (ticketTypeRepository.existsByName(newTicketType.getName())) {
-            return ServiceResponse.<Void>builder().success(false).message("Ticket type with name %s already exists.".formatted(newTicketType.getName())).build();
+    public ServiceResponse<Integer> createTicketType(TicketTypeDto dto) {
+        var response = buildTicketTypeFromDto(dto);
+
+        if (!response.isSuccess()) {
+            return ServiceResponse.<Integer>builder().success(false).message(response.getMessage()).build();
         }
 
-        newTicketType.setId(-1);
-        ticketTypeRepository.save(newTicketType);
+        var ticketType = response.getData();
 
-        return ServiceResponse.<Void>builder().success(true).build();
+        if (ticketTypeRepository.existsByName(ticketType.getName())) {
+            return ServiceResponse.<Integer>builder().success(false).message("Ticket type with name %s already exists.".formatted(ticketType.getName())).build();
+        }
+
+        ticketType = ticketTypeRepository.save(ticketType);
+
+        return ServiceResponse.<Integer>builder().success(true).data(ticketType.getId()).build();
     }
 
-    public ServiceResponse<Void> updateTicketType(TicketType newTicketType, int id) {
+    public ServiceResponse<Integer> updateTicketType(TicketTypeDto dto, int id) {
         var oldTicketType = ticketTypeRepository.findById(id).orElse(null);
 
-        if (oldTicketType == null || !validateTicketType(newTicketType)) {
-            return ServiceResponse.<Void>builder().success(false).message("The ticket type data is invalid.").build();
+        if (oldTicketType == null) {
+            return ServiceResponse.<Integer>builder().success(false).message("Ticket type with id %d does not exist".formatted(id)).build();
         }
 
+        var response = buildTicketTypeFromDto(dto);
+
+        if (!response.isSuccess()) {
+            return ServiceResponse.<Integer>builder().success(false).message(response.getMessage()).build();
+        }
+
+        var newTicketType = response.getData();
+
         if (!newTicketType.getName().equals(oldTicketType.getName()) && ticketTypeRepository.existsByName(newTicketType.getName())) {
-            return ServiceResponse.<Void>builder().success(false).message("Ticket type with name %s already exists.".formatted(newTicketType.getName())).build();
+            return ServiceResponse.<Integer>builder().success(false).message("Ticket type with name %s already exists.".formatted(newTicketType.getName())).build();
         }
 
         newTicketType.setId(id);
-        ticketTypeRepository.save(newTicketType);
+        newTicketType = ticketTypeRepository.save(newTicketType);
 
-        return ServiceResponse.<Void>builder().success(true).build();
+        return ServiceResponse.<Integer>builder().success(true).data(newTicketType.getId()).build();
     }
 
-    private boolean validateTicketType(TicketType elem) {
-        var violations = validator.validate(elem);
+    private ServiceResponse<TicketType> buildTicketTypeFromDto(TicketTypeDto dto) {
+        var ticketType = ticketTypeMapper.mapToEntity(dto);
+        var violations = validator.validate(ticketType);
 
-        return violations.isEmpty();
+        if (!violations.isEmpty()) {
+            return ServiceResponse.<TicketType>builder().success(false).message(buildErrorMessage(violations)).build();
+        }
+
+        return ServiceResponse.<TicketType>builder().success(true).data(ticketType).build();
     }
 }
