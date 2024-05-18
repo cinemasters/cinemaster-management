@@ -48,7 +48,7 @@ public class TicketPerkService {
             seatType.setPerk(newTicketPerk);
             newTicketPerk.setSeatType(seatType);
         } else {
-            var screeningType = screeningTypeService.getScreeningTypeById(dto.getScreeningTypeId()).getData();
+            var screeningType = screeningTypeService.getScreeningType(dto.getScreeningTypeId());
 
             if (screeningType == null || screeningTypeService.hasLinkedPerk(screeningType.getId())) {
                 return ServiceResponse.<Integer>builder().success(false).message("The screening type is invalid or is already in use.").build();
@@ -88,7 +88,7 @@ public class TicketPerkService {
             seatType.setPerk(newTicketPerk);
             newTicketPerk.setSeatType(seatType);
         } else {
-            var screeningType = screeningTypeService.getScreeningTypeById(dto.getScreeningTypeId()).getData();
+            var screeningType = screeningTypeService.getScreeningType(dto.getScreeningTypeId());
 
             if (screeningType == null || (screeningTypeService.hasLinkedPerk(screeningType.getId()) && screeningType.getId() != oldTicketPerk.getScreeningType().getId())) {
                 return ServiceResponse.<Integer>builder().success(false).message("The screening type is invalid or is already in use.").build();

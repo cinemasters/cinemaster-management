@@ -82,7 +82,7 @@ public class MovieService {
         movie.setReleaseDate(movie.getReleaseDate().truncatedTo(ChronoUnit.DAYS));
 
         for (var videoId : dto.getVideoTypes()) {
-            var type = screeningTypeService.getScreeningTypeById(videoId).getData();
+            var type = screeningTypeService.getScreeningType(videoId);
 
             if (type == null || type.getType() != ScreeningTypeEnum.Video || movie.getScreeningTypes().contains(type)) {
                 return ServiceResponse.<Movie>builder().success(false).message("The video type id %d is invalid.".formatted(videoId)).build();
@@ -92,7 +92,7 @@ public class MovieService {
         }
 
         for (var audioId : dto.getAudioTypes()) {
-            var type = screeningTypeService.getScreeningTypeById(audioId).getData();
+            var type = screeningTypeService.getScreeningType(audioId);
 
             if (type == null || type.getType() != ScreeningTypeEnum.Audio || movie.getScreeningTypes().contains(type)) {
                 return ServiceResponse.<Movie>builder().success(false).message("The audio type id %d is invalid.".formatted(audioId)).build();

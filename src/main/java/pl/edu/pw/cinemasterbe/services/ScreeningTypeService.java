@@ -6,69 +6,83 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.cinemasterbe.model.domain.movie.ScreeningType;
+import pl.edu.pw.cinemasterbe.model.dto.movie.ScreeningTypeDto;
+import pl.edu.pw.cinemasterbe.model.mappers.ScreeningTypeMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.ScreeningTypeRepository;
+
+import static pl.edu.pw.cinemasterbe.utils.ServiceUtils.buildErrorMessage;
 
 @Service
 @RequiredArgsConstructor
 public class ScreeningTypeService {
     private final ScreeningTypeRepository screeningTypeRepository;
     private final Validator validator;
+    private final ScreeningTypeMapper screeningTypeMapper;
 
-    public ServiceResponse<Page<ScreeningType>> getScreeningTypes(Pageable pageRequest) {
-        return ServiceResponse.<Page<ScreeningType>>builder().success(true).data(screeningTypeRepository.findAll(pageRequest)).build();
+    public Page<ScreeningType> getScreeningTypes(Pageable pageRequest) {
+        return screeningTypeRepository.findAll(pageRequest);
     }
 
-    public ServiceResponse<Iterable<ScreeningType>> getUsableScreeningTypes(int perkId) {
-        return ServiceResponse.<Iterable<ScreeningType>>builder().success(true).data(screeningTypeRepository.findAllByPerkIdOrPerkNull(perkId)).build();
+    public Iterable<ScreeningType> getUsableScreeningTypes(int perkId) {
+        return screeningTypeRepository.findAllByPerkIdOrPerkNull(perkId);
     }
 
-    public ServiceResponse<ScreeningType> getScreeningTypeById(int id) {
-        var screeningType = screeningTypeRepository.findById(id).orElse(null);
-
-        return ServiceResponse.<ScreeningType>builder().data(screeningType).success(screeningType != null).build();
+    public ScreeningType getScreeningType(int id) {
+        return screeningTypeRepository.findById(id).orElse(null);
     }
 
     public boolean hasLinkedPerk(int id) {
-        var screeningType = getScreeningTypeById(id).getData();
+        var screeningType = getScreeningType(id);
 
         return screeningType == null || screeningType.getPerk() != null;
     }
 
-    public ServiceResponse<Void> createScreeningType(ScreeningType newScreeningType) {
-        if (!validateScreeningType(newScreeningType)) {
-            return ServiceResponse.<Void>builder().success(false).message("The screening type data is invalid.").build();
-        }
-        if (screeningTypeRepository.existsByName(newScreeningType.getName())) {
-            return ServiceResponse.<Void>builder().success(false).message("Screening type with name %s already exists.".formatted(newScreeningType.getName())).build();
+    public ServiceResponse<Integer> createScreeningType(ScreeningTypeDto dto) {
+        var response = buildScreeningTypeFromDto(dto, -1);
+
+        if (!response.isSuccess()) {
+            return ServiceResponse.<Integer>builder().success(false).message(response.getMessage()).build();
         }
 
-        newScreeningType.setId(-1);
-        screeningTypeRepository.save(newScreeningType);
+        var scrType = screeningTypeRepository.save(response.getData());
 
-        return ServiceResponse.<Void>builder().success(true).build();
+        return ServiceResponse.<Integer>builder().success(true).data(scrType.getId()).build();
     }
 
-    public ServiceResponse<Void> updateScreeningType(ScreeningType newScreeningType, int id) {
-        var oldScreeningType = screeningTypeRepository.findById(id).orElse(null);
+    public ServiceResponse<Integer> updateScreeningType(ScreeningTypeDto dto, int id) {
+        var oldScreeningType = getScreeningType(id);
 
-        if (oldScreeningType == null || !validateScreeningType(newScreeningType)) {
-            return ServiceResponse.<Void>builder().success(false).message("The screening type data is invalid.").build();
+        if (oldScreeningType == null) {
+            return ServiceResponse.<Integer>builder().success(false).message("Screening type with id %d does not exist.".formatted(id)).build();
         }
 
-        if (!newScreeningType.getName().equals(oldScreeningType.getName()) && screeningTypeRepository.existsByName(newScreeningType.getName())) {
-            return ServiceResponse.<Void>builder().success(false).message("Screening type with name %s already exists.".formatted(newScreeningType.getName())).build();
+        var response = buildScreeningTypeFromDto(dto, id);
+
+        if (!response.isSuccess()) {
+            return ServiceResponse.<Integer>builder().success(false).message(response.getMessage()).build();
         }
 
-        newScreeningType.setId(id);
-        screeningTypeRepository.save(newScreeningType);
+        var scrType = response.getData();
 
-        return ServiceResponse.<Void>builder().success(true).build();
+        scrType.setId(id);
+        scrType = screeningTypeRepository.save(scrType);
+
+        return ServiceResponse.<Integer>builder().success(true).data(scrType.getId()).build();
     }
 
-    private boolean validateScreeningType(ScreeningType elem) {
-        var violations = validator.validate(elem);
+    private ServiceResponse<ScreeningType> buildScreeningTypeFromDto(ScreeningTypeDto dto, int id) {
+        var scrType = screeningTypeMapper.mapToEntity(dto);
+        var violations = validator.validate(dto);
 
-        return violations.isEmpty();
+        if (!violations.isEmpty()) {
+            return ServiceResponse.<ScreeningType>builder().success(false).message(buildErrorMessage(violations)).build();
+        }
+
+        if (screeningTypeRepository.existsByNameAndIdNot(scrType.getName(), id)) {
+            return ServiceResponse.<ScreeningType>builder().success(false).message("Screening type with name %s already exists.".formatted(scrType.getName())).build();
+        }
+
+        return ServiceResponse.<ScreeningType>builder().success(true).data(scrType).build();
     }
 }

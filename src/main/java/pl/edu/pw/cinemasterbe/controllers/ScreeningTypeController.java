@@ -25,35 +25,35 @@ public class ScreeningTypeController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<PageDto<ScreeningTypeDto>> getScreeningTypes(@RequestParam(defaultValue = "0", required = false) int page, @RequestParam(defaultValue = "50", required = false) int size) {
         var pageRequest = PageRequest.of(page, size);
-        var response = screeningTypeService.getScreeningTypes(pageRequest);
+        var data = screeningTypeService.getScreeningTypes(pageRequest);
 
-        return ResponseEntity.ok(pageMapper.map(response.getData(), screeningTypeMapper::mapToDto));
+        return ResponseEntity.ok(pageMapper.map(data, screeningTypeMapper::mapToDto));
     }
 
     @RequestMapping(path = "/usable", method = RequestMethod.GET)
     public ResponseEntity<Iterable<ScreeningTypeDto>> getUsableScreeningTypes(@RequestParam(defaultValue = "-1", required = false) int perkId) {
-        var response = screeningTypeService.getUsableScreeningTypes(perkId);
+        var data = screeningTypeService.getUsableScreeningTypes(perkId);
 
-        return ResponseEntity.ok(StreamSupport.stream(response.getData().spliterator(), false).map(screeningTypeMapper::mapToDto).toList());
+        return ResponseEntity.ok(StreamSupport.stream(data.spliterator(), false).map(screeningTypeMapper::mapToDto).toList());
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<ScreeningTypeDto> getScreeningType(@PathVariable int id) {
-        var response = screeningTypeService.getScreeningTypeById(id);
+        var screeningType = screeningTypeService.getScreeningType(id);
 
-        return response.isSuccess() ? ResponseEntity.ok(screeningTypeMapper.mapToDto(response.getData())) : ResponseEntity.noContent().build();
+        return screeningType != null ? ResponseEntity.ok(screeningTypeMapper.mapToDto(screeningType)) : ResponseEntity.noContent().build();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ServiceResponse<Void>> createScreeningType(@RequestBody ScreeningTypeDto seatType) {
-        var response = screeningTypeService.createScreeningType(screeningTypeMapper.mapToEntity(seatType));
+    public ResponseEntity<ServiceResponse<Integer>> createScreeningType(@RequestBody ScreeningTypeDto seatType) {
+        var response = screeningTypeService.createScreeningType(seatType);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ServiceResponse<Void>> updateScreeningType(@RequestBody ScreeningTypeDto seatType, @PathVariable int id) {
-        var response = screeningTypeService.updateScreeningType(screeningTypeMapper.mapToEntity(seatType), id);
+    public ResponseEntity<ServiceResponse<Integer>> updateScreeningType(@RequestBody ScreeningTypeDto seatType, @PathVariable int id) {
+        var response = screeningTypeService.updateScreeningType(seatType, id);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
