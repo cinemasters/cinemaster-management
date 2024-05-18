@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pl.edu.pw.cinemasterbe.model.domain.ticket.TicketType;
 
 public interface TicketTypeRepository extends JpaRepository<TicketType, Integer> {
-    boolean existsByName(String name);
+    boolean existsByNameAndIdNot(String name, int id);
 }
