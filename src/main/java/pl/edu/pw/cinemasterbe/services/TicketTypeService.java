@@ -24,7 +24,7 @@ public class TicketTypeService {
         return ticketTypeRepository.findAll(pageRequest);
     }
 
-    public TicketType getTicketTypeById(int id) {
+    public TicketType getTicketType(int id) {
         return ticketTypeRepository.findById(id).orElse(null);
     }
 
@@ -41,7 +41,7 @@ public class TicketTypeService {
     }
 
     public ServiceResponse<Integer> updateTicketType(TicketTypeDto dto, int id) {
-        var oldTicketType = ticketTypeRepository.findById(id).orElse(null);
+        var oldTicketType = getTicketType(id);
 
         if (oldTicketType == null) {
             return ServiceResponse.<Integer>builder().success(false).message("Ticket type with id %d does not exist".formatted(id)).build();

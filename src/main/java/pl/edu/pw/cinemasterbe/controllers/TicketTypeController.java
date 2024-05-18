@@ -30,7 +30,7 @@ public class TicketTypeController {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<TicketTypeDto> getTicketType(@PathVariable int id) {
-        var ticketType = ticketTypeService.getTicketTypeById(id);
+        var ticketType = ticketTypeService.getTicketType(id);
 
         return ticketType != null ? ResponseEntity.ok(ticketTypeMapper.mapToDto(ticketType)) : ResponseEntity.noContent().build();
     }
