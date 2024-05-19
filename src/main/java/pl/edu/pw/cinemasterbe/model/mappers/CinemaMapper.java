@@ -4,9 +4,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.Cinema;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaOpeningTime;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaRoom;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaDetailsDto;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaGridDto;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaOpeningTimeDto;
+import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaRoomDto;
 
 @Mapper(componentModel = "spring")
 public interface CinemaMapper {
@@ -25,4 +27,7 @@ public interface CinemaMapper {
                 .closed(entity.isClosed())
                 .build();
     }
+
+    @Mapping(target = "layoutId", source = "layout.id")
+    CinemaRoomDto mapToRoomDto(CinemaRoom entity);
 }

@@ -8,6 +8,7 @@ import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaOpeningTime;
 import pl.edu.pw.cinemasterbe.model.dto.PageDto;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaDetailsDto;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaGridDto;
+import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaRoomDto;
 import pl.edu.pw.cinemasterbe.model.mappers.CinemaMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.services.CinemaService;
@@ -77,6 +78,17 @@ public class CinemaController {
         var response = cinemaService.updateCinema(dto, id);
 
         return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
+    }
+
+    @RequestMapping(path = "/{id}/rooms", method = RequestMethod.GET)
+    public ResponseEntity<Iterable<CinemaRoomDto>> getCinemaRooms(@PathVariable int id) {
+        var cinema = cinemaService.getCinema(id);
+
+        if (cinema == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(cinema.getRooms().stream().map(cinemaMapper::mapToRoomDto).toList());
     }
 
     private boolean isCinemaOpen(CinemaOpeningTime openingTime) {
