@@ -46,6 +46,9 @@ public class Cinema {
     @Builder.Default
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
     private List<CinemaOpeningTime> openingTimes = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
+    private List<CinemaRoom> rooms = new ArrayList<>();
 
     public void addOpeningTime(CinemaOpeningTime openingTime) {
         openingTimes.add(openingTime);
