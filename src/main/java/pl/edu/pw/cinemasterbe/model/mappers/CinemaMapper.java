@@ -2,6 +2,7 @@ package pl.edu.pw.cinemasterbe.model.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.Cinema;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaOpeningTime;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaRoom;
@@ -30,4 +31,13 @@ public interface CinemaMapper {
 
     @Mapping(target = "layoutId", source = "layout.id")
     CinemaRoomDto mapToRoomDto(CinemaRoom entity);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "dto.name")
+    @Mapping(target = "cinema", source = "cinema")
+    CinemaRoom mapToRoomEntity(CinemaRoomDto dto, Cinema cinema);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "rooms", ignore = true)
+    void updateCinema(@MappingTarget Cinema oldCinema, Cinema newCinema);
 }

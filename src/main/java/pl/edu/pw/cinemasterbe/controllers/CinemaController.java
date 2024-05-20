@@ -17,6 +17,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -89,6 +90,13 @@ public class CinemaController {
         }
 
         return ResponseEntity.ok(cinema.getRooms().stream().map(cinemaMapper::mapToRoomDto).toList());
+    }
+
+    @RequestMapping(path = "/{id}/rooms", method = RequestMethod.PUT)
+    public ResponseEntity<ServiceResponse<Void>> updateCinemaRooms(@PathVariable int id, @RequestBody List<CinemaRoomDto> rooms) {
+        var response = cinemaService.updateCinemaRooms(rooms, id);
+
+        return response.isSuccess() ? ResponseEntity.ok(response) : ResponseEntity.unprocessableEntity().body(response);
     }
 
     private boolean isCinemaOpen(CinemaOpeningTime openingTime) {

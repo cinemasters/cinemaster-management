@@ -7,20 +7,25 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.Cinema;
 import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaOpeningTime;
+import pl.edu.pw.cinemasterbe.model.domain.cinema.CinemaRoom;
 import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaDetailsDto;
+import pl.edu.pw.cinemasterbe.model.dto.cinema.CinemaRoomDto;
 import pl.edu.pw.cinemasterbe.model.mappers.CinemaMapper;
 import pl.edu.pw.cinemasterbe.model.util.ServiceResponse;
 import pl.edu.pw.cinemasterbe.repositories.CinemaRepository;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import static pl.edu.pw.cinemasterbe.utils.ServiceUtils.buildErrorMessage;
 
 @Service
 @RequiredArgsConstructor
 public class CinemaService {
+    private final RoomLayoutService roomLayoutService;
     private final CinemaRepository cinemaRepository;
     private final CinemaMapper cinemaMapper;
     private final Validator validator;
@@ -46,9 +51,9 @@ public class CinemaService {
     }
 
     public ServiceResponse<Integer> updateCinema(CinemaDetailsDto dto, int id) {
-        var oldCinema = getCinema(id);
+        var cinema = getCinema(id);
 
-        if (oldCinema == null) {
+        if (cinema == null) {
             return ServiceResponse.<Integer>builder().success(false).message("Cinema with id %d does not exist.".formatted(id)).build();
         }
 
@@ -58,12 +63,68 @@ public class CinemaService {
             return ServiceResponse.<Integer>builder().success(false).message(response.getMessage()).build();
         }
 
-        var updatedCinema = response.getData();
+        cinemaMapper.updateCinema(cinema, response.getData());
 
-        updatedCinema.setId(id);
-        updatedCinema = cinemaRepository.save(updatedCinema);
+        for (var opTime : cinema.getOpeningTimes()) {
+            opTime.setCinema(cinema);
+        }
+        
+        cinema = cinemaRepository.save(cinema);
 
-        return ServiceResponse.<Integer>builder().success(true).data(updatedCinema.getId()).build();
+        return ServiceResponse.<Integer>builder().success(true).data(cinema.getId()).build();
+    }
+
+    public ServiceResponse<Void> updateCinemaRooms(List<CinemaRoomDto> roomDtos, int id) {
+        var cinema = getCinema(id);
+
+        if (cinema == null) {
+            return ServiceResponse.<Void>builder().success(false).message("Cinema with id %d does not exist.".formatted(id)).build();
+        }
+
+        var response = buildRoomsFromDto(roomDtos, cinema);
+
+        if (!response.isSuccess()) {
+            return ServiceResponse.<Void>builder().success(false).message(response.getMessage()).build();
+        }
+
+        cinema.updateRooms(response.getData());
+        cinemaRepository.save(cinema);
+
+        return ServiceResponse.<Void>builder().success(true).build();
+    }
+
+    private ServiceResponse<List<CinemaRoom>> buildRoomsFromDto(List<CinemaRoomDto> roomDtos, Cinema cinema) {
+        var rooms = new ArrayList<CinemaRoom>();
+        var names = new HashSet<String>();
+
+        for (var roomDto : roomDtos) {
+            if (roomDto == null) {
+                return ServiceResponse.<List<CinemaRoom>>builder().success(false).message("The room must not be null.").build();
+            }
+
+            var room = cinemaMapper.mapToRoomEntity(roomDto, cinema);
+            var violations = validator.validate(room);
+
+            if (!violations.isEmpty()) {
+                return ServiceResponse.<List<CinemaRoom>>builder().success(false).message(buildErrorMessage(violations)).build();
+            }
+
+            var layout = roomLayoutService.getRoomLayoutById(roomDto.getLayoutId()).getData();
+
+            if (layout == null) {
+                return ServiceResponse.<List<CinemaRoom>>builder().success(false).message("Room layout with id %d does not exist.".formatted(roomDto.getLayoutId())).build();
+            }
+
+            names.add(room.getName());
+            room.setLayout(layout);
+            rooms.add(room);
+        }
+
+        if (rooms.size() != names.size()) {
+            return ServiceResponse.<List<CinemaRoom>>builder().success(false).message("The room names must be unique.").build();
+        }
+
+        return ServiceResponse.<List<CinemaRoom>>builder().success(true).data(rooms).build();
     }
 
     private ServiceResponse<Cinema> buildCinemaFromDto(CinemaDetailsDto dto) {

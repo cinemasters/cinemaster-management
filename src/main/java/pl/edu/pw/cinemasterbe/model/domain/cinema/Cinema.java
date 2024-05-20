@@ -44,13 +44,18 @@ public class Cinema {
     @Column(name = "phone_number")
     private String phoneNumber;
     @Builder.Default
-    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CinemaOpeningTime> openingTimes = new ArrayList<>();
     @Builder.Default
-    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CinemaRoom> rooms = new ArrayList<>();
 
     public void addOpeningTime(CinemaOpeningTime openingTime) {
         openingTimes.add(openingTime);
+    }
+
+    public void updateRooms(List<CinemaRoom> newRooms) {
+        rooms.clear();
+        rooms.addAll(newRooms);
     }
 }
